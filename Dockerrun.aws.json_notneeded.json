@@ -1,0 +1,40 @@
+{
+  "AWSEBDockerrunVersion": "3",
+  "Authentication": {
+    "bucket": "DOC-EXAMPLE-BUCKET",
+    "key": "mydockercfg"
+  },
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "ch4ku/multi-client-20",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "ch4ku/multi-server-20",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "ch4ku/multi-worker-20",
+      "hostname": "worker",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "ch4ku/multi-nginx-20",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "server"]
+    }
+  ]
+}

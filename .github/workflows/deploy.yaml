@@ -23,17 +23,17 @@ jobs:
       - run: docker push ch4ku/multi-server-20
       - run: docker push ch4ku/multi-worker-20
 
-        #- name: Generate deployment package
-        #  run: zip -r deploy.zip . -x '*.git*'
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
 
-        #- name: Deploy to EB
-        #  uses: einaregilsson/beanstalk-deploy@v18
-        #  with:
-        #    aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-        #    aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-        #    application_name: docker-application
-        #    environment_name: Docker-application-env
-        #    existing_bucket_name: elasticbeanstalk-eu-north-1-503600729669
-        #    region: eu-north-1
-        #    version_label: ${{ github.sha }}
-        #    deployment_package: deploy.zip
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: docker-application
+          environment_name: Docker-application-env
+          existing_bucket_name: elasticbeanstalk-eu-north-1-503600729669
+          region: eu-north-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
