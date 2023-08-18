@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-cluster-ip-service
+spec:
+  type: ClusterIP
+  selector:
+    component: postgres
+  ports:
+    # “port” refers to the container port exposed by a pod or deployment, while a “targetPort” refers to the port on the host machine that traffic is directed to
+    - port: 5432
+      targetPort: 5432
