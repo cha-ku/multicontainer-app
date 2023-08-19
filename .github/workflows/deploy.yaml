@@ -43,21 +43,21 @@ jobs:
         run: |-
           docker build -t ch4ku/multi-client-20:latest -t ch4ku/multi-client-20:${{ env.SHA }} -f ./client/Dockerfile ./client
           docker build -t ch4ku/multi-server-20:latest -t ch4ku/multi-server-20:${{ env.SHA }} -f ./server/Dockerfile ./server
-          docker build -t ch4ku/multi-worker-20:latest -t ch4ku/multi-worker-k8s-gh:${{ env.SHA }} -f ./worker/Dockerfile ./worker
+          docker build -t ch4ku/multi-worker-20:latest -t ch4ku/multi-worker-20:${{ env.SHA }} -f ./worker/Dockerfile ./worker
  
       - name: Push
         run: |-
           docker push ch4ku/multi-client-20:latest
           docker push ch4ku/multi-server-20:latest
-          docker push ch4ku/multi-worker-k8s-gh:latest
+          docker push ch4ku/multi-worker-20:latest
  
           docker push ch4ku/multi-client-20:${{ env.SHA }}
           docker push ch4ku/multi-server-20:${{ env.SHA }}
-          docker push ch4ku/multi-worker-k8s-gh:${{ env.SHA }}
+          docker push ch4ku/multi-worker-20:${{ env.SHA }}
  
       - name: Apply
         run: |-
           kubectl apply -f k8s
           kubectl set image deployments/server-deployment server=ch4ku/multi-server-20:${{ env.SHA }}
           kubectl set image deployments/client-deployment client=ch4ku/multi-client-20:${{ env.SHA }}
-          kubectl set image deployments/worker-deployment worker=ch4ku/multi-worker-k8s-gh:${{ env.SHA }}
+          kubectl set image deployments/worker-deployment worker=ch4ku/multi-worker-20:${{ env.SHA }}
